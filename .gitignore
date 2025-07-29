@@ -1,9 +1,9 @@
 # fish shell history and variables
-.config/fish/fish_variables
+fish/fish_variables
 
 # gh CLI authentication and config
-.config/gh/hosts.yml
-.config/gh/config.yml
+gh/hosts.yml
+gh/config.yml
 
 # Any other auth or secret files (like SSH or GPG keys if present)
 *.asc
