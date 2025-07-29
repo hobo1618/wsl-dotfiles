@@ -1,0 +1,57 @@
+[window]
+# Set window opacity (1.0 = opaque, 0.8 = 80% transparent)
+opacity = 0.95
+# Enable window resizing
+decorations = "full"
+dynamic_title = true
+
+[font]
+normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
+bold = { family = "JetBrainsMono Nerd Font", style = "Bold" }
+italic = { family = "JetBrainsMono Nerd Font", style = "Italic" }
+size = 12.0
+
+[colors]
+# Dracula theme (or similar)
+primary.background = "#1e1e2e"
+primary.foreground = "#cdd6f4"
+cursor.text = "#1e1e2e"
+cursor.cursor = "#f5c2e7"
+
+[colors.normal]
+black = "#45475a"
+red = "#f38ba8"
+green = "#a6e3a1"
+yellow = "#f9e2af"
+blue = "#89b4fa"
+magenta = "#f5c2e7"
+cyan = "#94e2d5"
+white = "#bac2de"
+
+[colors.bright]
+black = "#585b70"
+red = "#f38ba8"
+green = "#a6e3a1"
+yellow = "#f9e2af"
+blue = "#89b4fa"
+magenta = "#f5c2e7"
+cyan = "#94e2d5"
+white = "#a6adc8"
+
+[bell]
+animation = "EaseOutExpo"
+duration = 0
+
+[cursor]
+style = "Block"
+blink_interval = 750
+blink_timeout = 5
+unfocused_hollow = true
+
+[terminal.shell]
+program = "wsl.exe"
+args = ["--cd", "~"]
+
+[mouse]
+hide_when_typing = true
+
