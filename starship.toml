@@ -1,0 +1,16 @@
+# ~/.config/starship.toml
+
+format = """
+[](#9A348E)\
+$username[@](#FBAED2)\
+$hostname[](bg:#DA627D fg:#9A348E)\
+$directory[](fg:#DA627D bg:#FCA17D)\
+$git_branch$git_status[](fg:#FCA17D bg:#86BBD8)\
+$nodejs$rust$golang$python[](fg:#86BBD8 bg:#33658A)\
+$time[ ](fg:#33658A)\
+\n$character
+"""
+
+add_newline = true
+command_timeout = 1000
+
