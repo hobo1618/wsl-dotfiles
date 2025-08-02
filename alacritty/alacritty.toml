@@ -55,3 +55,4 @@ args = ["--cd", "~"]
 [mouse]
 hide_when_typing = true
 
+# Do you update?
