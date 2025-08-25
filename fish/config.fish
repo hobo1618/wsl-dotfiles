@@ -16,7 +16,7 @@ alias gp="git push"
 alias notes="cd ~/Documents/obsidian/"
 alias courses="cd ~/Documents/askerra/content/courses/"
 alias projects="cd ~/Documents/askerra/content/projects/"
-alias bank="cd ~/Documents/askerra/content/bank/"
+alias qb="cd ~/Documents/askerra/content/bank/"
 alias students="cd ~/Documents/askerra/private-students/"
 alias assets="cd ~/Documents/askerra/content/assets/"
 
