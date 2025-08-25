@@ -1,5 +1,7 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
+SETUVAR --export ASKERRA_BANK_DIR:/home/hobo/Documents/askerra/content/bank
+SETUVAR --export --path PATH:/home/hobo/Documents/askerra/content//bin\x1e/home/hobo/\x2ebun/bin\x1e/home/hobo/\x2ebun/bin\x1e/home/hobo/\x2ebun/bin\x1e/usr/local/sbin\x1e/usr/local/bin\x1e/usr/sbin\x1e/usr/bin\x1e/sbin\x1e/bin\x1e/usr/games\x1e/usr/local/games\x1e/usr/lib/wsl/lib\x1e/mnt/c/Windows/system32\x1e/mnt/c/Windows\x1e/mnt/c/Windows/System32/Wbem\x1e/mnt/c/Windows/System32/WindowsPowerShell/v1\x2e0/\x1e/mnt/c/Windows/System32/OpenSSH/\x1e/mnt/c/Program\x20Files\x20\x28x86\x29/NVIDIA\x20Corporation/PhysX/Common\x1e/mnt/c/Users/Will/scoop/shims\x1e/mnt/c/Users/Will/AppData/Local/Microsoft/WindowsApps\x1e/mnt/c/Users/Will/AppData/Local/Microsoft/WinGet/Links\x1e/snap/bin\x1e/home/hobo/\x2elocal/bin\x1e/home/hobo/\x2elocal/bin\x1e/home/hobo/\x2elocal/bin
 SETUVAR __fish_initialized:3400
 SETUVAR fish_color_autosuggestion:brblack
 SETUVAR fish_color_cancel:\x2dr

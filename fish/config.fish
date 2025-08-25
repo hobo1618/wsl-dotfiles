@@ -121,3 +121,8 @@ function llm-save
 
     echo "✅ Saved and embedded: $outfile"
 end
+
+set -Ux ASKERRA_BANK_DIR /home/hobo/Documents/askerra/content/bank
+set -g fish_user_paths $ASKERRA_BANK_DIR/bin $fish_user_paths
+
+
