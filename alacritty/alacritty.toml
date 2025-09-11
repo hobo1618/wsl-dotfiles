@@ -48,9 +48,9 @@ blink_interval = 750
 blink_timeout = 5
 unfocused_hollow = true
 
-[terminal.shell]
-program = "wsl.exe"
-args = ["--cd", "~"]
+# [terminal.shell]
+# program = "wsl.exe"
+# args = ["--cd", "~"]
 
 [mouse]
 hide_when_typing = true
