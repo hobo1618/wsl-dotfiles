@@ -122,7 +122,14 @@ function llm-save
     echo "✅ Saved and embedded: $outfile"
 end
 
-set -Ux ASKERRA_BANK_DIR /home/hobo/Documents/askerra/content/bank
+set -Ux ASKERRA_BANK_DIR /Users/will/Documents/askerra/content/bank
 set -g fish_user_paths $ASKERRA_BANK_DIR/bin $fish_user_paths
 
+set -Ux UXO_DIR $HOME/Documents/uxo 
+set PATH $PATH $HOME/Documents/uxo/bin
 
+
+
+
+# Created by `pipx` on 2025-09-10 04:32:59
+set PATH $PATH /Users/will/.local/bin
