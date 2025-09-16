@@ -132,7 +132,6 @@ main() {
   ensure_homebrew
   eval "$(brew shellenv)"
   brew update
-
   local formulas=(
     fish
     tmux
@@ -148,6 +147,7 @@ main() {
   local casks=(
     alacritty
     amethyst
+    font-jetbrains-mono-nerd-font
     hammerspoon
     karabiner-elements
   )
