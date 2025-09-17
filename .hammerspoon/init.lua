@@ -3,29 +3,112 @@ local leaderKey = "f18" -- Karabiner maps Cmd+; to F18
 local leaderTimeout = 1.2 -- seconds
 local subTimeout = 1.5
 
--- Hardcode BANK_DIR so GUI env can't mess it up
-local BANK_DIR = "/Users/will/Documents/askerra/content/bank"
+local log = hs.logger.new("shot", "info")
+
+local function trim(str)
+	return (str or ""):gsub("^%s+", ""):gsub("%s+$", "")
+end
+
+local function envVar(name)
+	if hs and hs.processInfo and hs.processInfo.environment then
+		local value = hs.processInfo.environment[name]
+		if value and value ~= "" then
+			return value
+		end
+	end
+
+	local value = os.getenv(name)
+	if value and value ~= "" then
+		return value
+	end
+
+	return nil
+end
+
+local function resolveBankDir()
+	local env = envVar("BANK_DIR")
+	if env then
+		return env
+	end
+
+	local shellCmd = [[/bin/zsh -lc 'printf %s "${BANK_DIR:-}"']]
+	local output, ok, _, rc = hs.execute(shellCmd, true)
+	if ok and rc == 0 then
+		local value = trim(output)
+		if value ~= "" then
+			return value
+		end
+	end
+
+	return "/Users/willhobden/Documents/askerra/content/bank"
+end
+
+local function ensureDir(path)
+	if not path or path == "" then
+		return
+	end
+
+	if hs.fs.attributes(path) then
+		return
+	end
+
+	local ok, err = hs.fs.mkdir(path)
+	if not ok then
+		log.e(string.format("shot: mkdir failed for %s (%s)", path, err or "unknown error"))
+	end
+end
+
+local HOME = envVar("HOME") or "~"
+local BANK_DIR = resolveBankDir()
+local BANK_IMAGES_DIR = string.format("%s/images", BANK_DIR)
+local PICTURES_DIR = string.format("%s/Pictures/screenshots", HOME)
+
+ensureDir(BANK_DIR)
+ensureDir(BANK_IMAGES_DIR)
+ensureDir(PICTURES_DIR)
 
 -- Runner helpers -------------------------------------------------------------
+local activeTasks = {}
+
 local function run_bash(cmd, onExit)
-	hs.task
-		.new("/bin/bash", function(exitCode, _, _)
-			if onExit then
-				onExit(exitCode)
-			end
-		end, { "-lc", cmd })
-		:start()
+	local task
+	task = hs.task.new("/bin/bash", function(exitCode, _, _)
+		activeTasks[task] = nil
+		if onExit then
+			onExit(exitCode)
+		end
+	end, { "-lc", cmd })
+
+	if not task then
+		log.e("shot: failed to create task")
+		return
+	end
+
+	activeTasks[task] = true -- keep the task alive until screencapture finishes
+	if not task:start() then
+		activeTasks[task] = nil
+		log.e("shot: failed to start task")
+	end
 end
 
-local function shot_to(target)
-	-- Use BANK_DIR explicitly so ~/bin/shot sees it
-	local cmd = string.format("BANK_DIR=%q ~/bin/shot %s", BANK_DIR, target)
+local function shot_to(target, dest)
+	if target == "bank" then
+		ensureDir(BANK_DIR)
+		ensureDir(BANK_IMAGES_DIR)
+	elseif target == "pictures" then
+		ensureDir(PICTURES_DIR)
+	elseif target == "to" and dest and dest ~= "" then
+		ensureDir(dest)
+	end
+
+	local cmd
+	if target == "to" and dest and dest ~= "" then
+		cmd = string.format([[ BANK_DIR=%q ~/bin/shot to %q ]], BANK_DIR, dest)
+	else
+		cmd = string.format([[ BANK_DIR=%q ~/bin/shot %s ]], BANK_DIR, target)
+	end
+
 	run_bash(cmd)
-end
-
-local function clipboard_only()
-	-- One interactive selection to clipboard only (no file)
-	run_bash("screencapture -ci")
 end
 
 -- UI helpers ----------------------------------------------------------------
@@ -80,20 +163,19 @@ end)
 -- sc: clipboard only
 shotModal:bind({}, "c", function()
 	shotModal:exit()
-	hs.task.new("/bin/bash", nil, { "-lc", [[ ~/bin/shot clip ]] }):start()
+	shot_to("clip")
 end)
 
 -- sb: BANK + clipboard
 shotModal:bind({}, "b", function()
 	shotModal:exit()
-	local cmd = string.format([[ BANK_DIR=%q ~/bin/shot bank ]], BANK_DIR)
-	hs.task.new("/bin/bash", nil, { "-lc", cmd }):start()
+	shot_to("bank")
 end)
 
 -- sp: Pictures + clipboard
 shotModal:bind({}, "p", function()
 	shotModal:exit()
-	hs.task.new("/bin/bash", nil, { "-lc", [[ ~/bin/shot pictures ]] }):start()
+	shot_to("pictures")
 end)
 
 -- Ready message

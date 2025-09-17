@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Usage:
+#   shot clip        # clipboard only
+#   shot bank        # area -> clipboard AND $BANK_DIR/images/<timestamp>.png
+#   shot to /path    # area -> clipboard AND /path/<timestamp>.png
+#   shot pictures    # area -> clipboard AND ~/Pictures/screenshots/<timestamp>.png
+#
+# Strategy:
+# - For clipboard only: single interactive capture to clipboard (-ci).
+# - For clipboard + file: single interactive capture to file followed by copying the file to the clipboard.
+
+dest_for() {
+  case "${1:-}" in
+    clip|"")  echo "" ;;  # no file target: clipboard only
+    bank)     echo "${BANK_DIR:-${HOME}/Documents/bank}/images" ;;
+    pictures) echo "${HOME}/Pictures/screenshots" ;;
+    to)       shift; echo "${1:?Provide a path after 'to'}" ;;
+    *)        echo "${HOME}/Pictures/screenshots" ;;
+  esac
+}
+
+timestamp() { date +%Y-%m-%d_%H-%M-%S; }
+
+copy_selection_to_clipboard() {
+  # -c = clipboard, -i = interactive (region/window)
+  screencapture -ci
+}
+
+capture_selection_to_file() {
+  local file="$1"
+  screencapture -i "$file"
+}
+
+copy_file_to_clipboard() {
+  local file="$1"
+  SHOT_FILE="$file" /usr/bin/osascript <<'OSA'
+set p to system attribute "SHOT_FILE"
+if p is missing value then error "SHOT_FILE missing"
+set f to POSIX file p
+try
+  set the clipboard to (read f as «class PNGf»)
+on error
+  set the clipboard to (read f as TIFF picture)
+end try
+OSA
+}
+
+main() {
+  local target="${1:-clip}"; shift || true
+  local dir=""
+  if [[ "$target" == "to" ]]; then
+    dir="$(dest_for to "${1:-}")"
+  else
+    dir="$(dest_for "$target")"
+  fi
+
+  if [[ -z "$dir" ]]; then
+    # clipboard only
+    copy_selection_to_clipboard
+    echo "Copied screenshot to clipboard (no file)."
+    exit 0
+  fi
+
+  mkdir -p "$dir"
+  local file="$dir/$(timestamp).png"
+
+  # Single selection writes to file, then copy file into clipboard
+  capture_selection_to_file "$file"
+  copy_file_to_clipboard "$file"
+
+  # Verify write
+  if [[ ! -s "$file" ]]; then
+    echo "ERROR: file not created: $file" >&2
+    exit 1
+  fi
+
+  echo "Saved and copied: $file"
+}
+
+main "$@"
