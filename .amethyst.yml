@@ -36,16 +36,16 @@ layouts:
 # First mod (default option + shift).
 mod1:
   # - option
-  # - shift
+  - shift
   # - control
   - command
 
 # Second mod (default option + shift + control).
 mod2:
-  # - option
+  - option
   - shift
   # - control
-  - command
+  # - command
 
 # Commands:
 # special key values
@@ -62,8 +62,8 @@ mod2:
 
 # Move to the next layout in the list.
 cycle-layout:
-  mod: mod2
-  key: enter
+  mod: mod1
+  key: space
 
 # Move to the previous layout in the list.
 # cycle-layout-backward:
