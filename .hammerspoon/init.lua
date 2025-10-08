@@ -61,10 +61,12 @@ end
 local HOME = envVar("HOME") or "~"
 local BANK_DIR = resolveBankDir()
 local BANK_IMAGES_DIR = string.format("%s/images", BANK_DIR)
+local PROJECTS_DIR = string.format("%s/Documents/askerra/content/projects", HOME)
 local PICTURES_DIR = string.format("%s/Pictures/screenshots", HOME)
 
 ensureDir(BANK_DIR)
 ensureDir(BANK_IMAGES_DIR)
+ensureDir(PROJECTS_DIR)
 ensureDir(PICTURES_DIR)
 
 -- Runner helpers -------------------------------------------------------------
@@ -142,7 +144,7 @@ local shotTimer
 
 local function shotEnter()
 	shotModal:enter()
-	hint("screenshot: c=clipboard  b=bank  p=pictures")
+	hint("screenshot: c=clipboard  b=bank  p=pictures  v=projects")
 	if shotTimer then
 		shotTimer:stop()
 	end
@@ -176,6 +178,12 @@ end)
 shotModal:bind({}, "p", function()
 	shotModal:exit()
 	shot_to("pictures")
+end)
+
+-- sv: Projects + clipboard
+shotModal:bind({}, "v", function()
+	shotModal:exit()
+	shot_to("to", PROJECTS_DIR)
 end)
 
 -- Ready message
