@@ -48,9 +48,16 @@ blink_interval = 750
 blink_timeout = 5
 unfocused_hollow = true
 
+# WSL
 # [terminal.shell]
 # program = "wsl.exe"
 # args = ["--cd", "~"]
+
+# Apple Silicon
+[terminal.shell]
+program = "/opt/homebrew/bin/fish"
+args = ["--login"]
+
 
 [mouse]
 hide_when_typing = true
