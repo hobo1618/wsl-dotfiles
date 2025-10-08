@@ -19,6 +19,7 @@ alias projects="cd ~/Documents/askerra/content/projects/"
 alias qb="cd ~/Documents/askerra/content/bank/"
 alias students="cd ~/Documents/askerra/private-students/"
 alias assets="cd ~/Documents/askerra/content/assets/"
+alias excalidraw="/opt/homebrew/bin/excalidraw"
 
 
 
@@ -122,14 +123,14 @@ function llm-save
     echo "✅ Saved and embedded: $outfile"
 end
 
-set -Ux ASKERRA_BANK_DIR /Users/will/Documents/askerra/content/bank
-set -g fish_user_paths $ASKERRA_BANK_DIR/bin $fish_user_paths
+set -Ux BANK_DIR /Users/willhobden/Documents/askerra/content/bank
+# set -Ux ASKERRA_BANK_DIR /Users/will/Documents/askerra/content/bank
+# set -g fish_user_paths $ASKERRA_BANK_DIR/bin $fish_user_paths
 
 set -Ux UXO_DIR $HOME/Documents/uxo 
 set PATH $PATH $HOME/Documents/uxo/bin
 
-
-
+set PATH $PATH /Library/TeX/texbin
 
 # Created by `pipx` on 2025-09-10 04:32:59
 set PATH $PATH /Users/will/.local/bin
@@ -137,3 +138,16 @@ set PATH $PATH /Users/will/.local/bin
 set -x GPG_TTY (tty)
 
 
+# Homebrew environment
+if test -d /opt/homebrew/bin
+    eval (/opt/homebrew/bin/brew shellenv)
+end
+
+# nvm support via bass
+set -gx NVM_DIR $HOME/.nvm
+if test -s /opt/homebrew/opt/nvm/nvm.sh
+    bass source /opt/homebrew/opt/nvm/nvm.sh --no-use ';' nvm use default >/dev/null 2>&1
+    function nvm
+        bass source /opt/homebrew/opt/nvm/nvm.sh --no-use ';' nvm $argv
+    end
+end

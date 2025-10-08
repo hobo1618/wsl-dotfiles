@@ -1,9 +1,12 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR --export ASKERRA_BANK_DIR:/Users/will/Documents/askerra/content/bank
-SETUVAR --export BANK_DIR:/Users/will/Documents/askerra/content/bank
+SETUVAR --export BANK_DIR:/Users/willhobden/Documents/askerra/content/bank
+SETUVAR --export BANK_SQLITE3_BIN:/opt/homebrew/opt/sqlite/bin/sqlite3
+SETUVAR --export BANK_SQLITE3_LOAD:/Users/willhobden/Documents/askerra/content/bank/dist/vec0\x2edylib
 SETUVAR --export EDITOR:nvim
 SETUVAR --export GPG_TTY:/dev/ttys001
+SETUVAR --export OPENAI_API_KEY:sk\x2dproj\x2ddgg1gDF\x2dmBJyjitRzMP2uTgmFFYYYq4hlYlLiJKtixeSUjAg8tA7NVExMXzHpc2xp8z2LA9TCbT3BlbkFJu55IyZDcqkxgcT2SBBaF\x2dkRBXyY5HL\x2dws18KdKlkMcpcl5YcpwlICU_PyV7tBB_P16FVSQrXkA
 SETUVAR --export --path PATH:/Users/will/Documents/uxo/bin\x1e/home/hobo/Documents/askerra/content/bank/bin\x1e/Users/will/\x2ebun/bin\x1e/usr/local/bin\x1e/System/Cryptexes/App/usr/bin\x1e/usr/bin\x1e/bin\x1e/usr/sbin\x1e/sbin\x1e/var/run/com\x2eapple\x2esecurity\x2ecryptexd/codex\x2esystem/bootstrap/usr/local/bin\x1e/var/run/com\x2eapple\x2esecurity\x2ecryptexd/codex\x2esystem/bootstrap/usr/bin\x1e/var/run/com\x2eapple\x2esecurity\x2ecryptexd/codex\x2esystem/bootstrap/usr/appleinternal/bin\x1e/Users/will/\x2ebun/bin\x1e/home/hobo/\x2elocal/bin\x1e/home/hobo/\x2elocal/bin
 SETUVAR --export UXO_DIR:/Users/willhobden/Documents/uxo
 SETUVAR --export VISUAL:nvim
@@ -36,3 +39,4 @@ SETUVAR fish_pager_color_description:yellow\x1e\x2di
 SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_pager_color_selected_background:\x2dr
+SETUVAR fish_user_paths:/Users/willhobden/bin\x1e/Users/will/Documents/askerra/content/bank/bin
