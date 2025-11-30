@@ -3,7 +3,7 @@ if status is-interactive
 end
 
 # Disable greeting
-set fish_greeting
+set fish_greeting "Take Vitamin D!"
 
 # Shell aliases
 alias c="clear"
