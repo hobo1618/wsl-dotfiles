@@ -1,5 +1,7 @@
 # fish shell history and variables
 fish/fish_variables
+fish/fish_variables2
+
 
 # gh CLI authentication and config
 gh/hosts.yml
