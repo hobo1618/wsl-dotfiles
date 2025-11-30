@@ -61,11 +61,13 @@ end
 local HOME = envVar("HOME") or "~"
 local BANK_DIR = resolveBankDir()
 local BANK_IMAGES_DIR = string.format("%s/images", BANK_DIR)
+local BANK_TO_CLEAN_DIR = string.format("%s/to-clean", BANK_IMAGES_DIR)
 local PROJECTS_DIR = string.format("%s/Documents/askerra/content/projects", HOME)
 local PICTURES_DIR = string.format("%s/Pictures/screenshots", HOME)
 
 ensureDir(BANK_DIR)
 ensureDir(BANK_IMAGES_DIR)
+ensureDir(BANK_TO_CLEAN_DIR)
 ensureDir(PROJECTS_DIR)
 ensureDir(PICTURES_DIR)
 
@@ -140,11 +142,13 @@ end)
 
 -- Screenshot submodal (2nd key) --------------------------------------------
 local shotModal = hs.hotkey.modal.new()
+local bankModal = hs.hotkey.modal.new()
 local shotTimer
+local bankTimer
 
 local function shotEnter()
 	shotModal:enter()
-	hint("screenshot: c=clipboard  b=bank  p=pictures  v=projects")
+	hint("screenshot: c=clipboard  b=bank…  p=pictures  v=projects")
 	if shotTimer then
 		shotTimer:stop()
 	end
@@ -171,7 +175,42 @@ end)
 -- sb: BANK + clipboard
 shotModal:bind({}, "b", function()
 	shotModal:exit()
+	bankModal:enter()
+	hint("bank: b=default  g=images/to-clean")
+	if bankTimer then
+		bankTimer:stop()
+		bankTimer = nil
+	end
+	bankTimer = hs.timer.doAfter(subTimeout, function()
+		bankTimer = nil
+		bankModal:exit()
+	end)
+end)
+
+bankModal:bind({}, "escape", function()
+	if bankTimer then
+		bankTimer:stop()
+		bankTimer = nil
+	end
+	bankModal:exit()
+end)
+
+bankModal:bind({}, "b", function()
+	if bankTimer then
+		bankTimer:stop()
+		bankTimer = nil
+	end
+	bankModal:exit()
 	shot_to("bank")
+end)
+
+bankModal:bind({}, "g", function()
+	if bankTimer then
+		bankTimer:stop()
+		bankTimer = nil
+	end
+	bankModal:exit()
+	shot_to("to", BANK_TO_CLEAN_DIR)
 end)
 
 -- sp: Pictures + clipboard
