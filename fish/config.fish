@@ -3,7 +3,12 @@ if status is-interactive
 end
 
 # Disable greeting
-set fish_greeting "hold on tight"
+set fish_greeting "hold on tight
+implement custom 'grid' macro
+Приве́т, я Ви́лл. Я репети́тор по матема́тике и англи́йскому языку́.
+Мы с Таней также ведём ютуб-канал, где делимся советами по математике, грамматике и чтению.
+(Tanya and I also run a youtube channel, where we share tips on math, grammar and reading.)
+"
 
 # Shell aliases
 alias c="clear"
