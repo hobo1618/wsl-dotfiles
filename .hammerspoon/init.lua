@@ -62,13 +62,15 @@ local HOME = envVar("HOME") or "~"
 local BANK_DIR = resolveBankDir()
 local BANK_IMAGES_DIR = string.format("%s/images", BANK_DIR)
 local BANK_TO_CLEAN_DIR = string.format("%s/to-clean", BANK_IMAGES_DIR)
-local PROJECTS_DIR = string.format("%s/Documents/askerra/content/projects", HOME)
+local PROJECTS_DIR = string.format("%s/Documents/business/askerra/content/projects", HOME)
+local PROJECTS_IN_PROGRESS_DIR = string.format("%s/in-progress", PROJECTS_DIR)
 local PICTURES_DIR = string.format("%s/Pictures/screenshots", HOME)
 
 ensureDir(BANK_DIR)
 ensureDir(BANK_IMAGES_DIR)
 ensureDir(BANK_TO_CLEAN_DIR)
 ensureDir(PROJECTS_DIR)
+ensureDir(PROJECTS_IN_PROGRESS_DIR)
 ensureDir(PICTURES_DIR)
 
 -- Runner helpers -------------------------------------------------------------
@@ -119,6 +121,90 @@ end
 local function hint(txt)
 	hs.alert.show(txt, { radius = 8 }, 0.7)
 end
+
+local function listInProgressProjects()
+	local projects = {}
+	if not PROJECTS_IN_PROGRESS_DIR then
+		return projects
+	end
+
+	for entry in hs.fs.dir(PROJECTS_IN_PROGRESS_DIR) do
+		if entry ~= "." and entry ~= ".." then
+			local full = string.format("%s/%s", PROJECTS_IN_PROGRESS_DIR, entry)
+			local attr = hs.fs.attributes(full)
+			if attr and attr.mode == "directory" then
+				table.insert(projects, entry)
+			end
+		end
+	end
+
+	table.sort(projects)
+	return projects
+end
+
+local projectModal = hs.hotkey.modal.new()
+local projectModalHotkeys = {}
+local projectModalAlert
+
+local function clearProjectModalHotkeys()
+	for _, hotkey in ipairs(projectModalHotkeys) do
+		hotkey:delete()
+	end
+	projectModalHotkeys = {}
+end
+
+local function addProjectModalHotkey(key, handler)
+	local hotkey = projectModal:bind({}, key, handler)
+	table.insert(projectModalHotkeys, hotkey)
+	return hotkey
+end
+
+local function exitProjectModal()
+	clearProjectModalHotkeys()
+	if projectModalAlert then
+		hs.alert.closeSpecific(projectModalAlert)
+		projectModalAlert = nil
+	end
+	projectModal:exit()
+end
+
+local function showProjectPicker()
+	local projects = listInProgressProjects()
+	if #projects == 0 then
+		hint("shot: no in-progress projects")
+		return
+	end
+
+	clearProjectModalHotkeys()
+	if projectModalAlert then
+		hs.alert.closeSpecific(projectModalAlert)
+		projectModalAlert = nil
+	end
+
+	local lines = { "projects:" }
+	local maxBindings = math.min(#projects, 9) -- single-digit shortcuts keep selection immediate
+	for i = 1, maxBindings do
+		local project = projects[i]
+		table.insert(lines, string.format("%d %s", i, project))
+		addProjectModalHotkey(tostring(i), function()
+			exitProjectModal()
+			local dest = string.format("%s/%s/images", PROJECTS_IN_PROGRESS_DIR, project)
+			shot_to("to", dest)
+		end)
+	end
+
+	if #projects > maxBindings then
+		table.insert(lines, string.format("(+%d more)", #projects - maxBindings))
+	end
+
+	addProjectModalHotkey("q", exitProjectModal)
+	table.insert(lines, "q cancel")
+
+	projectModalAlert = hs.alert.show(table.concat(lines, "\n"), { radius = 8 }, "indefinite")
+	projectModal:enter()
+end
+
+projectModal:bind({}, "escape", exitProjectModal)
 
 -- Leader modal (1st key) ----------------------------------------------------
 local leader = hs.hotkey.modal.new()
@@ -222,7 +308,7 @@ end)
 -- sv: Projects + clipboard
 shotModal:bind({}, "v", function()
 	shotModal:exit()
-	shot_to("to", PROJECTS_DIR)
+	showProjectPicker()
 end)
 
 -- Ready message
