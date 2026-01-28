@@ -19,11 +19,11 @@ alias ga="git add"
 alias gc="git commit -m"
 alias gp="git push"
 alias notes="cd ~/Documents/obsidian/"
-alias courses="cd ~/Documents/askerra/content/courses/"
-alias projects="cd ~/Documents/askerra/content/projects/"
-alias qb="cd ~/Documents/askerra/content/bank/"
-alias students="cd ~/Documents/askerra/private-students/"
-alias assets="cd ~/Documents/askerra/content/assets/"
+alias courses="cd ~/Documents/business/askerra/content/courses/"
+alias projects="cd ~/Documents/business/askerra/content/projects/"
+alias qb="cd ~/Documents/business/askerra/content/bank/"
+alias students="cd ~/Documents/business/askerra/private-students/"
+alias assets="cd ~/Documents/business/askerra/content/assets/"
 alias excalidraw="/opt/homebrew/bin/excalidraw"
 
 
@@ -128,7 +128,7 @@ function llm-save
     echo "✅ Saved and embedded: $outfile"
 end
 
-set -Ux BANK_DIR /Users/willhobden/Documents/askerra/content/bank
+set -Ux BANK_DIR /Users/willhobden/Documents/business/askerra/content/bank
 # set -Ux ASKERRA_BANK_DIR /Users/will/Documents/askerra/content/bank
 # set -g fish_user_paths $ASKERRA_BANK_DIR/bin $fish_user_paths
 
