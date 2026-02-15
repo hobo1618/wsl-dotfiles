@@ -10,25 +10,25 @@ set fish_greeting "Ask students about SAT products purchased
 У меня есть дочь Мира, ей пять лет.
 Она учится во французской школе здесь, в Барселоне.
 ***
-Я принимаю душ.
+Я принима́ю душ.
 I am taking shower.
 
-Я обедаю.
+Я обе́даю.
 I am eating lunch.
 
-Я пью кофе.
+Я пью́ ко́фе.
 I am drinking coffee.
 
-Я чищу зубы.
+Я чи́щу зу́бы.
 I am cleaning teeth.
 
-Я играю с дочерью.
+Я игра́ю с доче́рью.
 I am playing with (my) daughter.
 
-Я работаю.
+Я рабо́таю.
 I am working.
 
-Я голоден.
+Я голо́ден.
 I am hungry.
 
 "
