@@ -3,11 +3,34 @@ if status is-interactive
 end
 
 # Disable greeting
-set fish_greeting "hold on tight
-implement custom 'grid' macro
+set fish_greeting "Ask students about SAT products purchased
+***
 Приве́т, я Ви́лл. Я репети́тор по матема́тике и англи́йскому языку́.
 Мы с Таней также ведём ютуб-канал, где делимся советами по математике, грамматике и чтению.
-(Tanya and I also run a youtube channel, where we share tips on math, grammar and reading.)
+У меня есть дочь Мира, ей пять лет.
+Она учится во французской школе здесь, в Барселоне.
+***
+Я принимаю душ.
+I am taking shower.
+
+Я обедаю.
+I am eating lunch.
+
+Я пью кофе.
+I am drinking coffee.
+
+Я чищу зубы.
+I am cleaning teeth.
+
+Я играю с дочерью.
+I am playing with (my) daughter.
+
+Я работаю.
+I am working.
+
+Я голоден.
+I am hungry.
+
 "
 
 # Shell aliases
@@ -21,6 +44,10 @@ alias gp="git push"
 alias notes="cd ~/Documents/obsidian/"
 alias courses="cd ~/Documents/business/askerra/content/courses/"
 alias projects="cd ~/Documents/business/askerra/content/projects/"
+alias worksheets="cd ~/Documents/business/askerra/content/worksheets/"
+alias webinars="cd ~/Documents/business/askerra/content/webinars/"
+alias dotfiles="cd ~/dotfiles"
+alias nvimconfig="cd ~/nvim"
 alias qb="cd ~/Documents/business/askerra/content/bank/"
 alias students="cd ~/Documents/business/askerra/private-students/"
 alias assets="cd ~/Documents/business/askerra/content/assets/"
