@@ -40,7 +40,7 @@ local function resolveBankDir()
 		end
 	end
 
-	return "/Users/willhobden/Documents/askerra/content/bank"
+	return "/Users/willhobden/Documents/business/askerra/content/bank"
 end
 
 local function ensureDir(path)
